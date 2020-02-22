@@ -1,28 +1,59 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Table v-if="tableData" :theData="tableData" :config="config" :style="{height: '600px'}"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Table from './components/Table'
 
 export default {
-  name: 'App',
   components: {
-    HelloWorld
+    Table
+  },
+  data: () => ({
+    tableData: undefined,
+    config: [
+      {
+        key: 'avatar',
+        title: 'Avatar',
+        type: 'image'
+      },
+      {
+        key: 'name',
+        title: 'Name',
+        type: 'text'
+      },
+      {
+        key: 'city',
+        title: 'City',
+        type: 'text'
+      },
+      {
+        key: 'companyName',
+        title: 'Company',
+        type: 'text'
+      },
+      {
+        key: 'createdAt',
+        title: 'Signup Date',
+        type: 'date'
+      }
+    ]
+  }),
+  mounted () {
+    this.$axios.get('https://5e4b062d6eafb7001488c99e.mockapi.io/something123/users')
+    .then(({data}) => {
+      this.tableData = data
+    })
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+
+body {
+  font-family: Helvetica, sans-serif;
+  font-weight: 400;
 }
 </style>
